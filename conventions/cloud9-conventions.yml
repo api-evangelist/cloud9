@@ -1,0 +1,126 @@
+generated: '2026-08-09'
+method: derived
+source: https://cloud9.gg/wp-json/ + observed response headers on wp/v2 collections
+docs: https://developer.wordpress.org/rest-api/using-the-rest-api/
+description: >-
+  Cross-cutting request/response semantics for the Cloud9 public API surface. Cloud9 documents
+  none of this itself — the conventions below are the WordPress REST API's, confirmed against the
+  live cloud9.gg deployment by reading the discovery index and the response headers returned by
+  each collection. Where a convention is absent (idempotency, rate-limit signalling) that absence
+  is recorded rather than assumed.
+authentication:
+  style: none for reads; HTTP Basic application passwords for writes; OAuth 2.1 for MCP
+  detail: authentication/cloud9-authentication.yml
+pagination:
+  style: page-and-per-page (offset)
+  params:
+  - name: page
+    in: query
+    default: 1
+    minimum: 1
+  - name: per_page
+    in: query
+    default: 10
+    minimum: 1
+    maximum: 100
+  - name: offset
+    in: query
+    note: alternative to page
+  response_headers:
+  - name: X-WP-Total
+    description: Total items in the collection, before pagination.
+  - name: X-WP-TotalPages
+    description: Total number of pages at the current per_page.
+  - name: Link
+    description: RFC 8288 next/prev relations for cursorless traversal.
+  observed:
+  - collection: players
+    x_wp_total: 47
+  - collection: teams
+    x_wp_total: 45
+  - collection: achievement
+    x_wp_total: 564
+  - collection: posts
+    x_wp_total: 89
+  - collection: media
+    x_wp_total: 1175
+field_selection:
+  sparse_fields:
+    param: _fields
+    description: Comma-separated list limiting the properties returned per item.
+  embedding:
+    param: _embed
+    description: >-
+      Inlines linked resources (author, featured media, terms) under _embedded, following the
+      _links HAL-style relation map every item carries.
+  context:
+    param: context
+    values: [view, embed, edit]
+    default: view
+    description: >-
+      Controls which schema properties are present. `edit` requires authentication; anonymous
+      clients get `view`.
+filtering_and_sort:
+  common_params: [search, slug, include, exclude, order, orderby, before, after, status]
+  note: Per-collection parameter sets are declared in json-schema/cloud9-wp-rest-index.json.
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key header, parameter, or documented retry contract exists on any Cloud9
+    surface. The public API is read-only for anonymous clients, so the question is largely moot,
+    but nothing idempotency-related is advertised and no Idempotency pointer is emitted for this
+    provider.
+metadata:
+  supported: partial
+  note: >-
+    Content items expose a `meta` object and, on the Cloud9 custom post types, an `acf` object
+    carrying the Advanced Custom Fields group. There is no arbitrary key/value metadata contract
+    for API consumers.
+request_tracing:
+  request_id_header: null
+  observed_headers: [x-ac, server-timing, alt-svc]
+  note: >-
+    No correlation/request-id header is returned. The x-ac and server-timing headers are
+    Automattic edge-cache diagnostics, not a stable trace identifier.
+versioning:
+  scheme: uri-path namespace
+  current: wp/v2
+  namespaces: 14
+  detail: lifecycle/cloud9-lifecycle.yml
+error_envelope:
+  format: WordPress REST error object (not RFC 9457)
+  content_type: application/json
+  shape:
+    code: machine-readable error slug, e.g. rest_forbidden
+    message: human-readable sentence
+    data:
+      status: HTTP status code, repeated in the body
+  example: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+  detail: errors/cloud9-problem-types.yml
+rate_limiting:
+  documented: false
+  headers_observed: []
+  note: >-
+    No RateLimit, X-RateLimit-*, or Retry-After headers were returned on any probed collection,
+    and Cloud9 publishes no rate-limit policy. Edge caching (Automattic Atomic / Cloudflare on
+    the store host) is the only observed throttle.
+caching:
+  headers_observed: [cache-control, x-ac, alt-svc, server-timing]
+  note: Automattic edge cache reports HIT/BYPASS via x-ac; MCP and abilities routes always BYPASS.
+schemas:
+  discoverable: true
+  method: HTTP OPTIONS on any collection returns a `schema` object (JSON Schema draft-04 style)
+  captured: json-schema/cloud9-wp-rest-schemas.json
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - url: https://cloud9.gg/wp-json/wp/v2/posts?per_page=1
+    status: 200
+    headers_seen: [X-WP-Total, X-WP-TotalPages, Link]
+  - url: https://cloud9.gg/wp-json/wp/v2/achievement?per_page=1
+    status: 200
+    x_wp_total: 564
+  - method: OPTIONS
+    url: https://cloud9.gg/wp-json/wp/v2/players
+    status: 200
+    finding: schema with 19 properties

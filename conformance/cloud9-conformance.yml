@@ -1,0 +1,111 @@
+generated: '2026-08-09'
+method: probed
+source: live probes of cloud9.gg + store.cloud9.gg
+description: >-
+  Cross-cutting standards conformance for the Cloud9 public surface, asserted only from what was
+  observed live. Cloud9 makes no compliance or standards claims anywhere on its site, publishes
+  no trust centre and no certifications, so no Compliance pointer is emitted. The standards it
+  does satisfy it satisfies by virtue of the platforms it runs on — WordPress for the content API
+  and the WordPress MCP adapter for the agent surface.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    RFC 6749 authorization-code grant advertised at
+    https://cloud9.gg/.well-known/oauth-authorization-server
+- id: oauth2.1-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported [S256]; token_endpoint_auth_methods_supported [none]
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: 200 application/json at /.well-known/oauth-authorization-server
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    200 application/json at /.well-known/oauth-protected-resource; 401 responses carry a
+    WWW-Authenticate Bearer challenge with a resource_metadata parameter
+- id: rfc7591-dynamic-client-registration
+  conforms: false
+  evidence: >-
+    No registration_endpoint advertised. The server uses client-ID metadata documents
+    (client_id_metadata_document_supported true) instead.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404
+- id: mcp
+  conforms: true
+  evidence: >-
+    JSON-RPC 2.0 MCP endpoint at /wp-json/mcp/mcp-oauth-server; conformant unauthorized challenge.
+    Tool list not enumerable anonymously, so protocol version and capability set are unverified.
+- id: json-schema
+  conforms: true
+  evidence: >-
+    HTTP OPTIONS on every wp/v2 collection returns a `schema` object; 14 collection schemas
+    harvested to json-schema/cloud9-wp-rest-schemas.json
+- id: rfc8288-web-linking
+  conforms: true
+  evidence: Link headers with next/prev relations on paginated collections; _links on every item
+- id: pagination
+  conforms: true
+  evidence: page/per_page/offset params with X-WP-Total and X-WP-TotalPages response headers
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors use the WordPress {code, message, data.status} envelope with content-type
+    application/json, not application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key header or documented retry contract on any surface
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on cloud9.gg
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog returns 404
+- id: a2a
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on cloud9.gg,
+    store.cloud9.gg and club9.cloud9.gg
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document found at any probed location on any Cloud9 host
+- id: graphql
+  conforms: false
+  evidence: https://cloud9.gg/graphql returns 404
+- id: hsts
+  conforms: true
+  evidence: strict-transport-security max-age=31536000 on cloud9.gg; see security/cloud9-domain-security.yml
+- id: dnssec
+  conforms: false
+  evidence: No DS record for cloud9.gg
+- id: caa
+  conforms: false
+  evidence: No CAA record for cloud9.gg
+- id: dmarc
+  conforms: true
+  evidence: DMARC present with policy quarantine
+compliance_program:
+  published: false
+  note: >-
+    No trust centre, certification list, SOC 2 / ISO 27001 / PCI claim, or security page exists
+    on any Cloud9 host. /security and /security.txt both return 404. No Compliance pointer is
+    emitted.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - url: https://cloud9.gg/.well-known/oauth-authorization-server
+    status: 200
+  - url: https://cloud9.gg/.well-known/oauth-protected-resource
+    status: 200
+  - url: https://cloud9.gg/.well-known/openid-configuration
+    status: 404
+  - url: https://cloud9.gg/.well-known/security.txt
+    status: 404
+  - url: https://cloud9.gg/.well-known/api-catalog
+    status: 404
+  - url: https://cloud9.gg/graphql
+    status: 404
+  - url: https://cloud9.gg/security
+    status: 404

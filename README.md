@@ -42,5 +42,26 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cloud9 is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/cloud9_stock/
+Cloud9 Esports, Inc. is a North American professional esports organization founded in 2013 by Jack
+and Paullie Etienne and headquartered in Santa Monica, California, fielding rosters across League of
+Legends, VALORANT, VALORANT Game Changers, Call of Duty and Rainbow Six.
+
+Cloud9 runs no developer program and publishes no OpenAPI. Its public web estate is nonetheless
+machine-readable, and that is what this profile captures:
+
+- **[cloud9.gg/wp-json/](https://cloud9.gg/wp-json/)** — an anonymous, unauthenticated WordPress
+  REST API. 277 routes across 14 namespaces, including four Cloud9-specific content types that make
+  the organization queryable as data: `players` (47), `teams` (45), `achievement` (564) and
+  `case-study` (7). Each collection's JSON Schema was harvested verbatim over HTTP `OPTIONS`.
+- **[cloud9.gg/wp-json/mcp/mcp-oauth-server](https://cloud9.gg/wp-json/mcp/mcp-oauth-server)** — an
+  undocumented remote Model Context Protocol server, discovered by probing `/.well-known/*`. It
+  advertises RFC 8414 authorization-server metadata and RFC 9728 protected-resource metadata, and
+  is gated behind OAuth 2.1 with PKCE and a single `mcp` scope. Anonymous `tools/list` returns 401,
+  so no tool inventory is recorded.
+- **[store.cloud9.gg](https://store.cloud9.gg/)** — a Shopify storefront serving the platform's
+  default anonymous `/products.json` and `/collections.json`.
+
+The inversion is the interesting part: the agent-native surface is locked while the same content is
+served to anyone over REST with no credential at all.
+
+Harvest source: https://forgeglobal.com/cloud9_stock/

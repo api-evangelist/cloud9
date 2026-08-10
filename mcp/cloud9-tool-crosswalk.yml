@@ -1,0 +1,127 @@
+generated: '2026-08-09'
+method: derived
+source: mcp/cloud9-mcp.yml + json-schema/cloud9-wp-rest-index.json
+description: >-
+  Crosswalk between Cloud9's agent-facing MCP surface and its machine-readable REST surface. Both
+  live on the same host, cloud9.gg, and both are served by the same WordPress install — but they
+  are inverted in posture. The REST surface (wp/v2, 118 routes) is anonymously readable with no
+  credential of any kind: an agent can already list the roster, the teams, 564 achievements, the
+  case studies and 89 news posts today. The MCP surface on the same content is fully gated behind
+  OAuth 2.1, and its tool list cannot be enumerated without an authorized session. So the tool
+  names are unknown while the underlying data is wide open. That is the finding worth recording:
+  the gate is on the agent-native projection, not on the data.
+surfaces:
+  openapi:
+    present: false
+    note: >-
+      Cloud9 publishes no OpenAPI and no Swagger. The machine-readable contract used for this
+      crosswalk is the live WordPress REST discovery index plus the per-collection JSON Schema
+      returned by HTTP OPTIONS — both harvested verbatim into json-schema/.
+  rest:
+    file: json-schema/cloud9-wp-rest-index.json
+    schemas: json-schema/cloud9-wp-rest-schemas.json
+    base: https://cloud9.gg/wp-json
+    gated: false
+    gate_note: Anonymous GET; write methods require WordPress application-password auth.
+    routes_total: 277
+    routes_wp_v2: 118
+  mcp:
+    url: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+    gated: true
+    gate: OAuth 2.1 bearer (scope `mcp`); anonymous tools/list returns 401 mcp_unauthorized
+    tools_enumerated: false
+  graphql:
+    present: false
+    note: https://cloud9.gg/graphql returns 404. No GraphQL endpoint on any Cloud9 host.
+crosswalk: []
+mcp_only: []
+rest_only:
+- capability: Cloud9 roster (players)
+  routes: 2
+  paths:
+  - GET /wp/v2/players
+  - GET /wp/v2/players/{id}
+  items: 47
+  note: Cloud9-specific custom post type; ACF field group attached under the `acf` property.
+- capability: Cloud9 teams
+  routes: 2
+  paths:
+  - GET /wp/v2/teams
+  - GET /wp/v2/teams/{id}
+  items: 45
+- capability: Competitive record (achievements)
+  routes: 2
+  paths:
+  - GET /wp/v2/achievement
+  - GET /wp/v2/achievement/{id}
+  items: 564
+- capability: Partner case studies
+  routes: 2
+  paths:
+  - GET /wp/v2/case-study
+  - GET /wp/v2/case-study/{id}
+  items: 7
+- capability: News and editorial
+  routes: 4
+  paths:
+  - GET /wp/v2/posts
+  - GET /wp/v2/posts/{id}
+  - GET /wp/v2/categories
+  - GET /wp/v2/tags
+  items: 89
+- capability: Site pages and media
+  routes: 4
+  paths:
+  - GET /wp/v2/pages
+  - GET /wp/v2/pages/{id}
+  - GET /wp/v2/media
+  - GET /wp/v2/media/{id}
+  items: 1192
+- capability: Search and type discovery
+  routes: 4
+  paths:
+  - GET /wp/v2/search
+  - GET /wp/v2/types
+  - GET /wp/v2/taxonomies
+  - GET /wp/v2/users
+  items: 769
+- capability: Platform and plugin namespaces
+  routes: 159
+  paths:
+  - /jetpack/v4/*
+  - /my-jetpack/v1/*
+  - /jetpack-protect/v1/*
+  - /jetpack-boost/v1/*
+  - /wp-rocket/v1/*
+  - /akismet/v1/*
+  - /facetwp/v1/*
+  - /wp-site-health/v1/*
+  - /wp-block-editor/v1/*
+  - /oembed/1.0/*
+  note: >-
+    Hosting/plugin management namespaces, not content. Almost all require authentication; listed
+    for completeness because they are advertised in the public discovery index.
+coverage:
+  mcp_tools_named: 0
+  mcp_tools_bound: 0
+  mcp_only: 0
+  rest_routes_total: 277
+  rest_routes_with_tool: 0
+  note: >-
+    mcp_tools_named is 0 because the tool list is auth-gated and Cloud9 publishes no tool
+    inventory anywhere public — this is an unknown, not a zero. rest_routes_with_tool is
+    likewise unverifiable rather than a true zero: the WordPress MCP adapter is by design a
+    projection of the same WordPress content the REST API serves, so overlap is likely, but
+    nothing public confirms which routes were registered as abilities.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - url: https://cloud9.gg/wp-json/
+    status: 200
+  - url: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+    method: POST tools/list
+    status: 401
+  - url: https://cloud9.gg/wp-json/wp-abilities/v1/abilities
+    status: 401
+  - url: https://cloud9.gg/graphql
+    status: 404

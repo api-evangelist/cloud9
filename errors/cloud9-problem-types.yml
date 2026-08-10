@@ -1,0 +1,67 @@
+generated: '2026-08-09'
+method: probed
+source: live error responses observed on https://cloud9.gg/wp-json/*
+format: wordpress-rest-error
+rfc9457: false
+description: >-
+  Cloud9 publishes no error reference. Every entry below is a response body actually returned by
+  the live cloud9.gg API during this pass — no error was inferred from documentation or from the
+  WordPress source. The envelope is the WordPress REST error object, not RFC 9457 problem+json:
+  content-type is application/json, and the body carries `code` (a stable machine-readable slug),
+  `message` (a human sentence) and `data.status` (the HTTP status repeated in the body).
+  Validation failures additionally carry `data.params` and `data.details` keyed by parameter.
+envelope:
+  content_type: application/json
+  fields:
+    code: machine-readable error slug
+    message: human-readable message
+    data.status: HTTP status code
+    data.params: map of parameter name to message (validation errors only)
+    data.details: map of parameter name to {code, message} (validation errors only)
+problems:
+- status: 404
+  code: rest_no_route
+  title: No route was found matching the URL and request method.
+  remediation: >-
+    Check the route against the discovery index at https://cloud9.gg/wp-json/ — 277 routes are
+    enumerated there with their supported methods.
+  observed_at: https://cloud9.gg/wp-json/wp/v2/nope
+- status: 404
+  code: rest_post_invalid_id
+  title: Invalid post ID.
+  remediation: >-
+    The requested item does not exist or is not published. List the collection first and use an
+    id from the result set.
+  observed_at: https://cloud9.gg/wp-json/wp/v2/posts/999999
+- status: 400
+  code: rest_invalid_param
+  title: 'Invalid parameter(s)'
+  detail_codes:
+  - rest_out_of_bounds
+  remediation: >-
+    Read data.details for the per-parameter reason. Example observed - per_page must be between
+    1 (inclusive) and 100 (inclusive).
+  observed_at: https://cloud9.gg/wp-json/wp/v2/posts?per_page=500
+- status: 401
+  code: rest_forbidden
+  title: Sorry, you are not allowed to do that.
+  remediation: >-
+    The route requires an authenticated WordPress user. Reads of wp/v2 content collections are
+    anonymous; management routes (settings, abilities, the default MCP server) are not.
+  observed_at: https://cloud9.gg/wp-json/wp/v2/settings
+- status: 401
+  code: rest_cannot_view_plugins
+  title: Sorry, you are not allowed to manage plugins for this site.
+  remediation: Administrative route. Not part of the public surface.
+  observed_at: https://cloud9.gg/wp-json/wp/v2/plugins
+- status: 401
+  code: mcp_unauthorized
+  title: MCP authentication required.
+  remediation: >-
+    Obtain an OAuth 2.1 bearer token with the `mcp` scope. The response carries a conformant
+    WWW-Authenticate Bearer challenge naming
+    https://cloud9.gg/.well-known/oauth-protected-resource.
+  observed_at: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+x-evidence:
+  fetched: '2026-08-09'
+  note: All six entries are verbatim live responses captured on the date above.

@@ -1,0 +1,81 @@
+generated: '2026-08-09'
+method: probed
+source: https://cloud9.gg/wp-json/ + https://cloud9.gg/.well-known/oauth-authorization-server
+docs: https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/
+description: >-
+  Cloud9 publishes no developer program and therefore no authentication documentation of its own.
+  This profile was read from the live surface: the WordPress REST discovery index advertises its
+  own authentication block, and the /.well-known/ OAuth metadata describes the MCP server's
+  authorization model. Three distinct postures coexist on the same host — anonymous read,
+  application-password write, and OAuth 2.1 for MCP.
+summary:
+  types: [none, http, oauth2]
+  anonymous_read: true
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+schemes:
+- name: AnonymousRead
+  type: none
+  applies_to: https://cloud9.gg/wp-json/wp/v2/*
+  description: >-
+    Every wp/v2 content collection returns 200 to an unauthenticated GET — posts, pages, media,
+    users, categories, tags, search, and the Cloud9 custom post types players, teams,
+    achievement and case-study. No key, no header, no referrer check. Verified against 14
+    collections.
+  sources: [https://cloud9.gg/wp-json/]
+- name: WordPressApplicationPasswords
+  type: http
+  scheme: basic
+  applies_to: write operations on https://cloud9.gg/wp-json/wp/v2/*
+  description: >-
+    The discovery index declares authentication.application-passwords with an authorization
+    endpoint at https://cloud9.gg/wp-admin/authorize-application.php. Application passwords are
+    sent as HTTP Basic credentials (username + generated application password) and inherit the
+    WordPress user's roles and capabilities. Only site users can obtain one — this is not a
+    public developer credential.
+  authorization_endpoint: https://cloud9.gg/wp-admin/authorize-application.php
+  sources: [https://cloud9.gg/wp-json/]
+- name: Cloud9MCPOAuth
+  type: oauth2
+  applies_to: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+  description: >-
+    OAuth 2.1 authorization code with PKCE (S256) for the remote MCP server. Public clients
+    (token_endpoint_auth_method none), refresh tokens supported, single `mcp` scope, bearer
+    token in the Authorization header. On an unauthenticated call the server returns a
+    conformant RFC 9728 challenge naming the protected-resource metadata document.
+  issuer: https://cloud9.gg
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://cloud9.gg/oauth/authorize
+    tokenUrl: https://cloud9.gg/oauth/token
+    revocationUrl: https://cloud9.gg/oauth/revoke
+    scopes: 1
+  detail: scopes/cloud9-scopes.yml
+  sources: [https://cloud9.gg/.well-known/oauth-authorization-server]
+- name: ShopifyStorefrontAnonymous
+  type: none
+  applies_to: https://store.cloud9.gg/products.json
+  description: >-
+    The Shopify storefront JSON endpoints answer anonymously. Cloud9 exposes no Storefront API
+    access token publicly and no Admin API surface.
+  sources: [https://store.cloud9.gg/products.json]
+not_found:
+  api_keys: No API key programme, developer portal, or key-issuance flow exists on any Cloud9 host.
+  openid_connect: https://cloud9.gg/.well-known/openid-configuration returns 404.
+  mutual_tls: Not advertised.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - url: https://cloud9.gg/wp-json/
+    status: 200
+    finding: 'authentication: {application-passwords: {endpoints: {authorization: .../authorize-application.php}}}'
+  - url: https://cloud9.gg/wp-json/wp/v2/players?per_page=1
+    status: 200
+    finding: anonymous read succeeds
+  - url: https://cloud9.gg/.well-known/oauth-authorization-server
+    status: 200
+  - url: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+    method: POST tools/list
+    status: 401
+  - url: https://cloud9.gg/.well-known/openid-configuration
+    status: 404

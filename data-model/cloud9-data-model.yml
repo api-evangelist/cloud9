@@ -1,0 +1,137 @@
+generated: '2026-08-09'
+method: derived
+source: json-schema/cloud9-wp-rest-schemas.json (14 collection schemas captured via HTTP OPTIONS)
+description: >-
+  Entity graph for the Cloud9 public content API, derived mechanically from the JSON Schema each
+  wp/v2 collection returns on HTTP OPTIONS. Four of the entities are Cloud9-specific custom post
+  types registered on this site — players, teams, achievement and case-study — and they are the
+  reason this surface is interesting: they make the roster and the competitive record queryable
+  as data rather than as marketing pages. The remaining entities are WordPress core.
+  IMPORTANT: every one of the four Cloud9 types carries an `acf` object (Advanced Custom Fields).
+  Those field groups are where the actual esports semantics live (game, role, handle, event,
+  placement, partner) and they are NOT described in the JSON Schema — the schema declares `acf`
+  as an untyped object. They are therefore recorded here as an undescribed extension point, not
+  guessed at.
+entities:
+- name: players
+  kind: custom-post-type
+  collection: /wp/v2/players
+  items: 47
+  schema_title: players
+  properties: 19
+  identity: {id: integer, slug: string}
+  extension_point: acf
+- name: teams
+  kind: custom-post-type
+  collection: /wp/v2/teams
+  items: 45
+  schema_title: teams
+  properties: 18
+  identity: {id: integer, slug: string}
+  extension_point: acf
+- name: achievement
+  kind: custom-post-type
+  collection: /wp/v2/achievement
+  items: 564
+  schema_title: achievement
+  properties: 18
+  identity: {id: integer, slug: string}
+  extension_point: acf
+- name: case-study
+  kind: custom-post-type
+  collection: /wp/v2/case-study
+  items: 7
+  schema_title: case-study
+  properties: 19
+  identity: {id: integer, slug: string}
+  extension_point: acf
+- name: post
+  kind: core-post-type
+  collection: /wp/v2/posts
+  items: 89
+  properties: 28
+- name: page
+  kind: core-post-type
+  collection: /wp/v2/pages
+  items: 17
+  properties: 26
+- name: attachment
+  kind: core-post-type
+  collection: /wp/v2/media
+  items: 1175
+  properties: 33
+- name: category
+  kind: taxonomy
+  collection: /wp/v2/categories
+  items: 19
+  properties: 10
+- name: tag
+  kind: taxonomy
+  collection: /wp/v2/tags
+  items: 0
+  properties: 8
+- name: user
+  kind: core
+  collection: /wp/v2/users
+  items: 3
+  properties: 20
+relationships:
+- from: post
+  to: user
+  kind: belongs_to
+  via: author
+- from: post
+  to: attachment
+  kind: has_one
+  via: featured_media
+- from: post
+  to: category
+  kind: has_many
+  via: categories
+- from: post
+  to: tag
+  kind: has_many
+  via: tags
+- from: players
+  to: attachment
+  kind: has_one
+  via: featured_media
+- from: teams
+  to: attachment
+  kind: has_one
+  via: featured_media
+- from: achievement
+  to: attachment
+  kind: has_one
+  via: featured_media
+- from: case-study
+  to: attachment
+  kind: has_one
+  via: featured_media
+- from: attachment
+  to: post
+  kind: belongs_to
+  via: post
+- from: attachment
+  to: user
+  kind: belongs_to
+  via: author
+- from: category
+  to: category
+  kind: belongs_to
+  via: parent
+not_derivable:
+- relationship: players -> teams
+  reason: >-
+    No id-reference field links a player to a team in the JSON Schema. If the association exists
+    it is inside the untyped `acf` object on one or both types. Recording it would be a guess.
+- relationship: achievement -> teams
+  reason: Same. The event/placement/team association is not exposed in the schema.
+traversal:
+  note: >-
+    Every item carries a `_links` map (RFC 8288 relations: self, collection, author,
+    wp:featuredmedia, wp:attachment, wp:term) and `?_embed` inlines them under `_embedded`. That
+    link map, not a documented data model, is the practical way to traverse this graph.
+x-evidence:
+  fetched: '2026-08-09'
+  method: HTTP OPTIONS on each wp/v2 collection; item counts from X-WP-Total response headers

@@ -1,0 +1,32 @@
+generated: '2026-08-09'
+method: generated
+source: probed https://cloud9.gg/wp-json/ (277 routes, 14 namespaces)
+description: >-
+  Packaged Agent Skills for the Cloud9 public surface. Cloud9 publishes no AGENTS.md, no skill
+  files and no developer documentation — a search of cloud9.gg found none — so this skill was
+  generated from routes that were individually probed and returned 200 anonymously. There is no
+  OpenAPI to ground against; the grounding artifact is the live WordPress REST discovery index
+  and the per-collection JSON Schema captured under json-schema/.
+skills:
+- file: cloud9-read-roster-and-news.md
+  name: Read the Cloud9 roster, teams, record and news
+  api: json-schema/cloud9-wp-rest-index.json
+  auth: none
+  routes:
+  - GET /wp/v2/players
+  - GET /wp/v2/teams
+  - GET /wp/v2/achievement
+  - GET /wp/v2/case-study
+  - GET /wp/v2/posts
+  - GET /wp/v2/categories
+  - GET /wp/v2/search
+not_generated:
+- skill: Cloud9 MCP tool usage
+  reason: >-
+    The MCP server at https://cloud9.gg/wp-json/mcp/mcp-oauth-server is OAuth-gated and its tool
+    list returns 401 anonymously. Writing operating instructions for tools whose names and input
+    schemas are unknown would be fabrication.
+- skill: Cloud9 store / commerce
+  reason: >-
+    store.cloud9.gg exposes Shopify's default anonymous /products.json and /collections.json,
+    but that is a platform surface Cloud9 neither authored nor documents. Not skill-worthy.

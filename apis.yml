@@ -1,23 +1,205 @@
 aid: cloud9
 name: Cloud9
-description: 'Cloud9 is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Cloud9 Esports, Inc. is a North American professional esports organization founded in 2013 by
+  Jack and Paullie Etienne and headquartered in Santa Monica, California. It fields competitive
+  rosters across League of Legends, VALORANT, VALORANT Game Changers, Call of Duty and Rainbow
+  Six, and its trophy case includes the inaugural Overwatch World Championship, the 2018 Rocket
+  League World Championship, multiple LCS titles and a Counter-Strike Major. Beyond competition
+  it runs Club9 (a membership and fan community at club9.cloud9.gg), an official Shopify
+  merchandise store at store.cloud9.gg, and a content and creator division. Cloud9 publishes no
+  developer program and no OpenAPI, but its public web estate is machine-readable: cloud9.gg runs
+  on WordPress and serves an anonymous, unauthenticated WordPress REST API at /wp-json/ covering
+  news posts, pages, media and the Cloud9-specific players, teams, achievement and case-study
+  content types, alongside a remote Model Context Protocol server advertised through RFC 8414 and
+  RFC 9728 discovery metadata.
+image: https://cloud9.gg/wp-content/uploads/Team_C9_blu_80x80.svg
 url: https://raw.githubusercontent.com/api-evangelist/cloud9/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-09'
 modified: '2026-08-09'
 tags:
 - Company
-apis: []
+- Esports
+- Gaming
+- Entertainment
+- Media
+- Sports
+- Content
+- WordPress
+- Community
+- Merchandise
+apis:
+- aid: cloud9:wordpress-rest-api
+  name: Cloud9 WordPress REST API
+  description: >-
+    cloud9.gg runs on WordPress (WP Cloud / Automattic Atomic hosting) and serves the standard
+    WordPress REST API anonymously at https://cloud9.gg/wp-json/. The discovery index enumerates
+    277 routes across 14 namespaces; the wp/v2 namespace alone carries 118 routes. Read access
+    requires no credentials and no key. Alongside the core content types (89 posts, 17 pages,
+    1,175 media items, 19 categories, 3 users, a 769-item search index) the site registers four
+    Cloud9-specific custom post types that make the roster and record queryable: players (47),
+    teams (45), achievement (564) and case-study (7). Responses carry X-WP-Total and
+    X-WP-TotalPages pagination headers and RFC 8288 Link headers, and every collection publishes
+    a real JSON Schema over HTTP OPTIONS. Write operations are advertised on the same routes but
+    require WordPress authentication (application passwords), so the public surface is read-only.
+  humanURL: https://developer.wordpress.org/rest-api/
+  baseURL: https://cloud9.gg/wp-json/wp/v2
+  tags:
+  - Content
+  - REST
+  - JSON
+  - WordPress
+  - Esports
+  properties:
+  - type: JSONSchema
+    url: json-schema/cloud9-wp-rest-schemas.json
+  - type: DataModel
+    url: data-model/cloud9-data-model.yml
+  - type: Conventions
+    url: conventions/cloud9-conventions.yml
+  - type: ErrorCatalog
+    url: errors/cloud9-problem-types.yml
+  - type: Authentication
+    url: authentication/cloud9-authentication.yml
+  - type: AgentSkill
+    url: skills/cloud9-read-roster-and-news.md
+  x-evidence:
+    discovery_url: https://cloud9.gg/wp-json/
+    http_status: 200
+    fetched: '2026-08-09'
+    routes: 277
+    namespaces: 14
+    anonymous_read: true
+    platform_docs: https://developer.wordpress.org/rest-api/
+    note: >-
+      This is the WordPress platform REST API as deployed on the Cloud9 site, not a bespoke
+      Cloud9 developer API. Cloud9 publishes no OpenAPI and no developer documentation for it;
+      the contract recorded here was read from the live discovery index and from HTTP OPTIONS
+      schema responses on each collection. No Documentation or APIReference pointer is emitted
+      for this API: the only reference that describes it is WordPress's own upstream
+      documentation, which Cloud9 neither authored nor links to, and crediting Cloud9 with it
+      would overstate what this company publishes.
+- aid: cloud9:mcp-server
+  name: Cloud9 MCP Server
+  description: >-
+    A remote Model Context Protocol server published on cloud9.gg and advertised through RFC 8414
+    OAuth authorization-server metadata and RFC 9728 protected-resource metadata. It is the
+    WordPress MCP adapter fronting the Cloud9 content estate, exposed at the WordPress REST
+    namespace `mcp` with two servers — mcp-oauth-server and mcp-adapter-default-server — plus the
+    companion wp-abilities/v1 namespace. Authorization is OAuth 2.1 authorization code with PKCE
+    (S256), a single coarse `mcp` scope, public clients (token_endpoint_auth_method none) and
+    client-ID metadata documents rather than RFC 7591 dynamic registration. An anonymous
+    tools/list call returns 401 with a well-formed WWW-Authenticate Bearer challenge carrying the
+    resource_metadata pointer, so the live tool list and per-tool inputSchema require an
+    authorized session. No tool inventory is published anywhere public, so none is recorded here.
+  humanURL: https://cloud9.gg/
+  baseURL: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+  tags:
+  - MCP
+  - Agents
+  - Content
+  properties:
+  - type: MCPServer
+    url: mcp/cloud9-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/cloud9-tool-crosswalk.yml
+  - type: OAuthScopes
+    url: scopes/cloud9-scopes.yml
+  x-evidence:
+    authorization_server: https://cloud9.gg/.well-known/oauth-authorization-server
+    protected_resource: https://cloud9.gg/.well-known/oauth-protected-resource
+    http_status: 200
+    tools_list_status: 401
+    fetched: '2026-08-09'
+- aid: cloud9:store-json
+  name: Cloud9 Store JSON Endpoints
+  description: >-
+    The official Cloud9 merchandise store at store.cloud9.gg is a Shopify storefront, and Shopify
+    serves its standard anonymous product and collection JSON endpoints on it — /products.json
+    returns the live catalogue with variants, prices, options and images, and /collections.json
+    returns the storefront collections. These are platform endpoints Shopify exposes by default
+    rather than a Cloud9-authored API, and Cloud9 documents neither, but both return 200 to an
+    unauthenticated client and are the only machine-readable view of Cloud9 commerce.
+  humanURL: https://store.cloud9.gg/
+  baseURL: https://store.cloud9.gg
+  tags:
+  - Commerce
+  - Products
+  - JSON
+  - Shopify
+  x-evidence:
+    platform_docs: https://shopify.dev/docs/api/ajax
+    products_url: https://store.cloud9.gg/products.json
+    products_status: 200
+    collections_url: https://store.cloud9.gg/collections.json
+    collections_status: 200
+    platform: Shopify (powered-by header)
+    fetched: '2026-08-09'
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/cloud9-domain-security.yml
 - type: Website
+  url: https://cloud9.gg/
+- type: Blog
+  url: https://cloud9.gg/news/
+- type: GitHubOrganization
+  url: https://github.com/cloud9esports
+- type: Support
+  url: https://cloud9.gg/contact/
+- type: Community
+  url: https://discordapp.com/invite/cloud9
+- type: SignUp
+  url: https://club9.cloud9.gg/explore?callbackUrl=/explore&login=open
+- type: TermsOfService
+  url: https://cloud9.gg/terms-of-service/
+- type: PrivacyPolicy
+  url: https://cloud9.gg/privacy-policy/
+- type: About
+  url: https://cloud9.gg/about/
+- type: Careers
+  url: https://cloud9.gg/careers/
+- type: BrandAssets
+  url: https://cloud9.gg/brand-assets/
+- type: Shop
+  url: https://store.cloud9.gg/
+- type: WellKnown
+  url: well-known/cloud9-well-known.yml
+- type: Authentication
+  url: authentication/cloud9-authentication.yml
+- type: OAuthScopes
+  url: scopes/cloud9-scopes.yml
+- type: MCPServer
+  url: mcp/cloud9-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/cloud9-tool-crosswalk.yml
+- type: JSONSchema
+  url: json-schema/cloud9-wp-rest-schemas.json
+- type: DataModel
+  url: data-model/cloud9-data-model.yml
+- type: Conventions
+  url: conventions/cloud9-conventions.yml
+- type: Conformance
+  url: conformance/cloud9-conformance.yml
+- type: ErrorCatalog
+  url: errors/cloud9-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/cloud9-lifecycle.yml
+- type: LLMsTxt
+  url: llms/cloud9-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: SecondaryMarket
   url: https://forgeglobal.com/cloud9_stock/
+x-enrichment:
+  date: '2026-08-09'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1

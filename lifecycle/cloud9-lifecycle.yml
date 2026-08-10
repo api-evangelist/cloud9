@@ -1,0 +1,73 @@
+generated: '2026-08-09'
+method: probed
+source: https://cloud9.gg/wp-json/ + site probes
+description: >-
+  Lifecycle posture for the Cloud9 public API surface. Cloud9 runs no developer program, so there
+  is no versioning policy, no deprecation policy, no SLA and no status page of its own. What
+  exists is inherited from WordPress: the REST API is versioned by URI-path namespace, and the
+  site currently serves 14 namespaces of which wp/v2 is the content contract. Recording the
+  absences here is the point — none of them is a gap the pipeline can fill.
+versioning:
+  scheme: uri-path namespace
+  current: wp/v2
+  namespaces:
+  - {name: 'wp/v2', routes: 118, role: core content contract}
+  - {name: 'mcp', routes: 3, role: MCP adapter (unversioned namespace)}
+  - {name: 'wp-abilities/v1', routes: 6, role: WordPress Abilities API}
+  - {name: 'wp-site-health/v1', routes: 8}
+  - {name: 'wp-block-editor/v1', routes: 4}
+  - {name: 'oembed/1.0', routes: 3}
+  - {name: 'jetpack/v4', routes: 70}
+  - {name: 'jetpack/v4/explat', routes: 2}
+  - {name: 'my-jetpack/v1', routes: 20}
+  - {name: 'jetpack-protect/v1', routes: 17}
+  - {name: 'jetpack-boost/v1', routes: 4}
+  - {name: 'wp-rocket/v1', routes: 10}
+  - {name: 'akismet/v1', routes: 7}
+  - {name: 'facetwp/v1', routes: 3}
+  docs: https://developer.wordpress.org/rest-api/
+  note: >-
+    The namespace set is a function of the plugins installed on the Cloud9 site and can change
+    without notice. Only wp/v2 should be treated as stable, and only because WordPress upstream
+    treats it so.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  note: >-
+    No Deprecation or Sunset headers (RFC 8594) were returned on any probed route, and Cloud9
+    publishes no deprecation policy. Any breaking change to the Cloud9 custom post types
+    (players, teams, achievement, case-study) or their ACF field groups would arrive unannounced.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: null
+  published: false
+  probed:
+  - {url: 'https://status.cloud9.gg/', status: 503}
+  note: >-
+    No status page exists on a Cloud9 host. cloud9.gg has wildcard DNS, so status.cloud9.gg and
+    api.cloud9.gg both resolve to the site IP, but both answer 503 and present an expired TLS
+    certificate — they are not services, they are the wildcard catching a name that was never
+    provisioned. Platform status for the underlying hosting is Automattic's (WP Cloud) and
+    Shopify's respectively, neither of which Cloud9 references.
+support:
+  contact: https://cloud9.gg/contact/
+  community: https://discordapp.com/invite/cloud9
+  note: General-purpose fan/business contact, not an API support channel.
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - url: https://cloud9.gg/wp-json/
+    status: 200
+  - url: https://cloud9.gg/wp-json/wp/v2/posts?per_page=1
+    status: 200
+    headers_absent: [Deprecation, Sunset]
+  - url: https://status.cloud9.gg/
+    status: 503
+  - url: https://api.cloud9.gg/
+    status: 503
+    note: expired TLS certificate; wildcard DNS, no service behind it

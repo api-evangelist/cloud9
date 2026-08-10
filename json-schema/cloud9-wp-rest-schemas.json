@@ -1,0 +1,3544 @@
+{
+  "posts": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "post",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "password": {
+        "description": "A password to protect access to the content and excerpt.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "content": {
+        "description": "The content for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Content for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML content for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          },
+          "block_version": {
+            "description": "Version of the content block format used by the post.",
+            "type": "integer",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "protected": {
+            "description": "Whether the content is protected with a password.",
+            "type": "boolean",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "author": {
+        "description": "The ID for the author of the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "excerpt": {
+        "description": "The excerpt for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Excerpt for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML excerpt for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          },
+          "protected": {
+            "description": "Whether the excerpt is protected with a password.",
+            "type": "boolean",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "comment_status": {
+        "description": "Whether or not comments are open on the post.",
+        "type": "string",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "ping_status": {
+        "description": "Whether or not the post can be pinged.",
+        "type": "string",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "format": {
+        "description": "The format for the post.",
+        "type": "string",
+        "enum": [
+          "standard",
+          "aside",
+          "chat",
+          "gallery",
+          "link",
+          "image",
+          "quote",
+          "status",
+          "video",
+          "audio"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "_acf_changed": {
+            "type": "boolean",
+            "title": "",
+            "description": "",
+            "default": false
+          },
+          "footnotes": {
+            "type": "string",
+            "title": "",
+            "description": "",
+            "default": ""
+          }
+        }
+      },
+      "sticky": {
+        "description": "Whether or not the post should be treated as sticky.",
+        "type": "boolean",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "categories": {
+        "description": "The terms assigned to the post in the category taxonomy.",
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "tags": {
+        "description": "The terms assigned to the post in the post_tag taxonomy.",
+        "type": "array",
+        "items": {
+          "type": "integer"
+        },
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-publish",
+        "title": "The current user can publish this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "publish",
+                "future"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-sticky",
+        "title": "The current user can sticky this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "sticky": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-assign-author",
+        "title": "The current user can change the author on this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-assign-categories",
+        "title": "The current user can assign terms in the category taxonomy.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-create-categories",
+        "title": "The current user can create terms in the category taxonomy.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-assign-tags",
+        "title": "The current user can assign terms in the post_tag taxonomy.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-create-tags",
+        "title": "The current user can create terms in the post_tag taxonomy.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/posts/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "pages": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "page",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "password": {
+        "description": "A password to protect access to the content and excerpt.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "parent": {
+        "description": "The ID for the parent of the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "content": {
+        "description": "The content for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Content for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML content for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          },
+          "block_version": {
+            "description": "Version of the content block format used by the post.",
+            "type": "integer",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "protected": {
+            "description": "Whether the content is protected with a password.",
+            "type": "boolean",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "author": {
+        "description": "The ID for the author of the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "excerpt": {
+        "description": "The excerpt for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Excerpt for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML excerpt for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          },
+          "protected": {
+            "description": "Whether the excerpt is protected with a password.",
+            "type": "boolean",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "comment_status": {
+        "description": "Whether or not comments are open on the post.",
+        "type": "string",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "ping_status": {
+        "description": "Whether or not the post can be pinged.",
+        "type": "string",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "menu_order": {
+        "description": "The order of the post in relation to other posts.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "_acf_changed": {
+            "type": "boolean",
+            "title": "",
+            "description": "",
+            "default": false
+          },
+          "footnotes": {
+            "type": "string",
+            "title": "",
+            "description": "",
+            "default": ""
+          }
+        }
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-publish",
+        "title": "The current user can publish this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/pages/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "publish",
+                "future"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/pages/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-assign-author",
+        "title": "The current user can change the author on this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/pages/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "players": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "players",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "password": {
+        "description": "A password to protect access to the content and excerpt.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "content": {
+        "description": "The content for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Content for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML content for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          },
+          "block_version": {
+            "description": "Version of the content block format used by the post.",
+            "type": "integer",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "protected": {
+            "description": "Whether the content is protected with a password.",
+            "type": "boolean",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-publish",
+        "title": "The current user can publish this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/players/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "publish",
+                "future"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/players/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "teams": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "teams",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "password": {
+        "description": "A password to protect access to the content and excerpt.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-publish",
+        "title": "The current user can publish this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/teams/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "publish",
+                "future"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/teams/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "achievement": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "achievement",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "password": {
+        "description": "A password to protect access to the content and excerpt.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-publish",
+        "title": "The current user can publish this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/achievement/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "publish",
+                "future"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/achievement/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "case-study": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "case-study",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "password": {
+        "description": "A password to protect access to the content and excerpt.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "content": {
+        "description": "The content for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Content for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML content for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          },
+          "block_version": {
+            "description": "Version of the content block format used by the post.",
+            "type": "integer",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "protected": {
+            "description": "Whether the content is protected with a password.",
+            "type": "boolean",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-publish",
+        "title": "The current user can publish this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/case-study/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "publish",
+                "future"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/case-study/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "categories": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "category",
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "Unique identifier for the term.",
+        "type": "integer",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "count": {
+        "description": "Number of published posts for the term.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "description": {
+        "description": "HTML description of the term.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "link": {
+        "description": "URL of the term.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "name": {
+        "description": "HTML title for the term.",
+        "type": "string",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "required": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the term unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ]
+      },
+      "taxonomy": {
+        "description": "Type attribution for the term.",
+        "type": "string",
+        "enum": [
+          "category"
+        ],
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "parent": {
+        "description": "The parent term ID.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": []
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    }
+  },
+  "tags": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "tag",
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "Unique identifier for the term.",
+        "type": "integer",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "count": {
+        "description": "Number of published posts for the term.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "description": {
+        "description": "HTML description of the term.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "link": {
+        "description": "URL of the term.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "name": {
+        "description": "HTML title for the term.",
+        "type": "string",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "required": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the term unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ]
+      },
+      "taxonomy": {
+        "description": "Type attribution for the term.",
+        "type": "string",
+        "enum": [
+          "post_tag"
+        ],
+        "context": [
+          "view",
+          "embed",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": []
+      }
+    }
+  },
+  "media": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "attachment",
+    "type": "object",
+    "properties": {
+      "date": {
+        "description": "The date the post was published, in the site's timezone.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the post was published, as GMT.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "guid": {
+        "description": "The globally unique identifier for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "raw": {
+            "description": "GUID for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ],
+            "readonly": true
+          },
+          "rendered": {
+            "description": "GUID for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "id": {
+        "description": "Unique identifier for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "link": {
+        "description": "URL to the post.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "modified": {
+        "description": "The date the post was last modified, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "modified_gmt": {
+        "description": "The date the post was last modified, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post unique to its type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "status": {
+        "description": "A named status for the post.",
+        "type": "string",
+        "enum": [
+          "publish",
+          "future",
+          "draft",
+          "pending",
+          "private",
+          "acf-disabled"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "permalink_template": {
+        "description": "Permalink template for the post.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "generated_slug": {
+        "description": "Slug automatically generated from the post title.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "class_list": {
+        "description": "An array of the class names for the post container element.",
+        "type": "array",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "description": "The title for the post.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Title for the post, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML title for the post, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "author": {
+        "description": "The ID for the author of the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "featured_media": {
+        "description": "The ID of the featured media for the post.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "comment_status": {
+        "description": "Whether or not comments are open on the post.",
+        "type": "string",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "ping_status": {
+        "description": "Whether or not the post can be pinged.",
+        "type": "string",
+        "enum": [
+          "open",
+          "closed"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "_acf_changed": {
+            "type": "boolean",
+            "title": "",
+            "description": "",
+            "default": false
+          }
+        }
+      },
+      "template": {
+        "description": "The theme file to use to display the post.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      },
+      "alt_text": {
+        "description": "Alternative text to display when attachment is not displayed.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "caption": {
+        "description": "The attachment caption.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Caption for the attachment, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML caption for the attachment, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "description": {
+        "description": "The attachment description.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Description for the attachment, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML description for the attachment, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "media_type": {
+        "description": "Attachment type.",
+        "type": "string",
+        "enum": [
+          "image",
+          "file"
+        ],
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "mime_type": {
+        "description": "The attachment MIME type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "media_details": {
+        "description": "Details about the media file, specific to its type.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "post": {
+        "description": "The ID for the associated post of the attachment.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "source_url": {
+        "description": "URL to the original attachment file.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "missing_image_sizes": {
+        "description": "List of the missing image sizes of the attachment.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "filename": {
+        "description": "Original attachment file name.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "filesize": {
+        "description": "Attachment file size in bytes.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "exif_orientation": {
+        "description": "EXIF orientation value. Values 1-8 follow the EXIF specification, where 1 means no rotation needed.",
+        "type": "integer",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      }
+    },
+    "links": [
+      {
+        "rel": "https://api.w.org/action-unfiltered-html",
+        "title": "The current user can post unfiltered HTML markup and JavaScript.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/media/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "raw": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      {
+        "rel": "https://api.w.org/action-assign-author",
+        "title": "The current user can change the author on this post.",
+        "href": "https://cloud9.gg/wp-json/wp/v2/media/{id}",
+        "targetSchema": {
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "users": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "user",
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "Unique identifier for the user.",
+        "type": "integer",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "username": {
+        "description": "Login name for the user.",
+        "type": "string",
+        "context": [
+          "edit"
+        ],
+        "required": true
+      },
+      "name": {
+        "description": "Display name for the user.",
+        "type": "string",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ]
+      },
+      "first_name": {
+        "description": "First name for the user.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "last_name": {
+        "description": "Last name for the user.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "email": {
+        "description": "The email address for the user.",
+        "type": "string",
+        "format": "email",
+        "context": [
+          "edit"
+        ],
+        "required": true
+      },
+      "url": {
+        "description": "URL of the user.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ]
+      },
+      "description": {
+        "description": "Description of the user.",
+        "type": "string",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ]
+      },
+      "link": {
+        "description": "Author URL of the user.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "locale": {
+        "description": "Locale for the user.",
+        "type": "string",
+        "enum": [
+          "",
+          "en_US"
+        ],
+        "context": [
+          "edit"
+        ]
+      },
+      "nickname": {
+        "description": "The nickname for the user.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the user.",
+        "type": "string",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ]
+      },
+      "registered_date": {
+        "description": "Registration date for the user.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "roles": {
+        "description": "Roles assigned to the user.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "context": [
+          "edit"
+        ]
+      },
+      "password": {
+        "description": "Password for the user (never included).",
+        "type": "string",
+        "context": [],
+        "required": true
+      },
+      "capabilities": {
+        "description": "All capabilities assigned to the user.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "extra_capabilities": {
+        "description": "Any extra capabilities assigned to the user.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "avatar_urls": {
+        "description": "Avatar URLs for the user.",
+        "type": "object",
+        "context": [
+          "embed",
+          "view",
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "24": {
+            "description": "Avatar URL with image size of 24 pixels.",
+            "type": "string",
+            "format": "uri",
+            "context": [
+              "embed",
+              "view",
+              "edit"
+            ]
+          },
+          "48": {
+            "description": "Avatar URL with image size of 48 pixels.",
+            "type": "string",
+            "format": "uri",
+            "context": [
+              "embed",
+              "view",
+              "edit"
+            ]
+          },
+          "96": {
+            "description": "Avatar URL with image size of 96 pixels.",
+            "type": "string",
+            "format": "uri",
+            "context": [
+              "embed",
+              "view",
+              "edit"
+            ]
+          }
+        }
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "persisted_preferences": {
+            "type": "object",
+            "title": "",
+            "description": "",
+            "default": [],
+            "context": [
+              "edit"
+            ],
+            "properties": {
+              "_modified": {
+                "description": "The date and time the preferences were updated.",
+                "type": "string",
+                "format": "date-time",
+                "readonly": false
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    }
+  },
+  "search": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "search-result",
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "Unique identifier for the object.",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "context": [
+          "view",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "title": {
+        "description": "The title for the object.",
+        "type": "string",
+        "context": [
+          "view",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "url": {
+        "description": "URL to the object.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "type": {
+        "description": "Object type.",
+        "type": "string",
+        "enum": [
+          "post",
+          "term",
+          "post-format"
+        ],
+        "context": [
+          "view",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "subtype": {
+        "description": "Object subtype.",
+        "type": "string",
+        "enum": [
+          "post",
+          "page",
+          "achievement",
+          "case-study",
+          "players",
+          "teams",
+          "category",
+          "post_tag"
+        ],
+        "context": [
+          "view",
+          "embed"
+        ],
+        "readonly": true
+      }
+    }
+  },
+  "comments": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "comment",
+    "type": "object",
+    "properties": {
+      "id": {
+        "description": "Unique identifier for the comment.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "author": {
+        "description": "The ID of the user object, if author was a user.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "author_email": {
+        "description": "Email address for the comment author.",
+        "type": "string",
+        "format": "email",
+        "context": [
+          "edit"
+        ]
+      },
+      "author_ip": {
+        "description": "IP address for the comment author.",
+        "type": "string",
+        "format": "ip",
+        "context": [
+          "edit"
+        ]
+      },
+      "author_name": {
+        "description": "Display name for the comment author.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "author_url": {
+        "description": "URL for the comment author.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "author_user_agent": {
+        "description": "User agent for the comment author.",
+        "type": "string",
+        "context": [
+          "edit"
+        ]
+      },
+      "content": {
+        "description": "The content for the comment.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "properties": {
+          "raw": {
+            "description": "Content for the comment, as it exists in the database.",
+            "type": "string",
+            "context": [
+              "edit"
+            ]
+          },
+          "rendered": {
+            "description": "HTML content for the comment, transformed for display.",
+            "type": "string",
+            "context": [
+              "view",
+              "edit",
+              "embed"
+            ],
+            "readonly": true
+          }
+        }
+      },
+      "date": {
+        "description": "The date the comment was published, in the site's timezone.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "date_gmt": {
+        "description": "The date the comment was published, as GMT.",
+        "type": "string",
+        "format": "date-time",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "link": {
+        "description": "URL to the comment.",
+        "type": "string",
+        "format": "uri",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "parent": {
+        "description": "The ID for the parent of the comment.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "default": 0
+      },
+      "post": {
+        "description": "The ID of the associated post object.",
+        "type": "integer",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "default": 0
+      },
+      "status": {
+        "description": "State of the comment.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ]
+      },
+      "type": {
+        "description": "Type of the comment.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true,
+        "default": "comment"
+      },
+      "author_avatar_urls": {
+        "description": "Avatar URLs for the comment author.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true,
+        "properties": {
+          "24": {
+            "description": "Avatar URL with image size of 24 pixels.",
+            "type": "string",
+            "format": "uri",
+            "context": [
+              "embed",
+              "view",
+              "edit"
+            ]
+          },
+          "48": {
+            "description": "Avatar URL with image size of 48 pixels.",
+            "type": "string",
+            "format": "uri",
+            "context": [
+              "embed",
+              "view",
+              "edit"
+            ]
+          },
+          "96": {
+            "description": "Avatar URL with image size of 96 pixels.",
+            "type": "string",
+            "format": "uri",
+            "context": [
+              "embed",
+              "view",
+              "edit"
+            ]
+          }
+        }
+      },
+      "meta": {
+        "description": "Meta fields.",
+        "type": "object",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "properties": {
+          "_wp_note_status": {
+            "type": "string",
+            "title": "",
+            "description": "Note resolution status",
+            "default": "",
+            "enum": [
+              "resolved",
+              "reopen"
+            ]
+          }
+        }
+      },
+      "acf": {
+        "description": "ACF field data",
+        "type": "object",
+        "properties": []
+      }
+    }
+  },
+  "types": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "type",
+    "type": "object",
+    "properties": {
+      "capabilities": {
+        "description": "All capabilities used by the post type.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "description": {
+        "description": "A human-readable description of the post type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "hierarchical": {
+        "description": "Whether or not the post type should have children.",
+        "type": "boolean",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "viewable": {
+        "description": "Whether or not the post type can be viewed.",
+        "type": "boolean",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "labels": {
+        "description": "Human-readable labels for the post type for various contexts.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "name": {
+        "description": "The title for the post type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the post type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "supports": {
+        "description": "All features, supported by the post type.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "has_archive": {
+        "description": "If the value is a string, the value will be used as the archive slug. If the value is false the post type has no archive.",
+        "type": [
+          "string",
+          "boolean"
+        ],
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "taxonomies": {
+        "description": "Taxonomies associated with post type.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "rest_base": {
+        "description": "REST base route for the post type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "rest_namespace": {
+        "description": "REST route's namespace for the post type.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "visibility": {
+        "description": "The visibility settings for the post type.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "show_ui": {
+            "description": "Whether to generate a default UI for managing this post type.",
+            "type": "boolean"
+          },
+          "show_in_nav_menus": {
+            "description": "Whether to make the post type available for selection in navigation menus.",
+            "type": "boolean"
+          }
+        }
+      },
+      "icon": {
+        "description": "The icon for the post type.",
+        "type": [
+          "string",
+          "null"
+        ],
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "template": {
+        "type": [
+          "array"
+        ],
+        "description": "The block template associated with the post type.",
+        "readonly": true,
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      },
+      "template_lock": {
+        "type": [
+          "string",
+          "boolean"
+        ],
+        "enum": [
+          "all",
+          "insert",
+          "contentOnly",
+          false
+        ],
+        "description": "The template_lock associated with the post type, or false if none.",
+        "readonly": true,
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ]
+      }
+    }
+  },
+  "taxonomies": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "taxonomy",
+    "type": "object",
+    "properties": {
+      "capabilities": {
+        "description": "All capabilities used by the taxonomy.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "description": {
+        "description": "A human-readable description of the taxonomy.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "hierarchical": {
+        "description": "Whether or not the taxonomy should have children.",
+        "type": "boolean",
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "labels": {
+        "description": "Human-readable labels for the taxonomy for various contexts.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "name": {
+        "description": "The title for the taxonomy.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "slug": {
+        "description": "An alphanumeric identifier for the taxonomy.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "show_cloud": {
+        "description": "Whether or not the term cloud should be displayed.",
+        "type": "boolean",
+        "context": [
+          "edit"
+        ],
+        "readonly": true
+      },
+      "types": {
+        "description": "Types associated with the taxonomy.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "context": [
+          "view",
+          "edit"
+        ],
+        "readonly": true
+      },
+      "rest_base": {
+        "description": "REST base route for the taxonomy.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "rest_namespace": {
+        "description": "REST namespace route for the taxonomy.",
+        "type": "string",
+        "context": [
+          "view",
+          "edit",
+          "embed"
+        ],
+        "readonly": true
+      },
+      "visibility": {
+        "description": "The visibility settings for the taxonomy.",
+        "type": "object",
+        "context": [
+          "edit"
+        ],
+        "readonly": true,
+        "properties": {
+          "public": {
+            "description": "Whether a taxonomy is intended for use publicly either via the admin interface or by front-end users.",
+            "type": "boolean"
+          },
+          "publicly_queryable": {
+            "description": "Whether the taxonomy is publicly queryable.",
+            "type": "boolean"
+          },
+          "show_ui": {
+            "description": "Whether to generate a default UI for managing this taxonomy.",
+            "type": "boolean"
+          },
+          "show_admin_column": {
+            "description": "Whether to allow automatic creation of taxonomy columns on associated post-types table.",
+            "type": "boolean"
+          },
+          "show_in_nav_menus": {
+            "description": "Whether to make the taxonomy available for selection in navigation menus.",
+            "type": "boolean"
+          },
+          "show_in_quick_edit": {
+            "description": "Whether to show the taxonomy in the quick/bulk edit panel.",
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

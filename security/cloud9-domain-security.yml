@@ -1,0 +1,36 @@
+generated: '2026-08-09'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: cloud9.gg
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  6 03:10:32 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: developer.wordpress.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 23 19:43:55 2026 GMT
+  hsts: false
+- host: store.cloud9.gg
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 28 00:39:32 2026 GMT
+  hsts: true
+  hsts_max_age: 7889238
+domains:
+- domain: cloud9.gg
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
+- domain: wordpress.org
+  dnssec: false
+  caa:
+  - 0 issue "letsencrypt.org;validationmethods=dns-01;accounturi=https://acme-v02.api.letsencrypt.org/acme/acct/53691143"
+  - 0 iodef "mailto:caa@wordpress.org"
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
