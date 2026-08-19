@@ -2,41 +2,44 @@ generated: '2026-08-09'
 method: searched
 source: https://cloud9.gg/.well-known/oauth-protected-resource
 status: published
-description: >-
-  Cloud9 publishes a remote Model Context Protocol server on its primary marketing host,
-  cloud9.gg. It is not listed in any MCP registry, is not mentioned anywhere on the Cloud9 site,
-  and Cloud9 operates no developer program — it was discovered by probing /.well-known/* on
-  cloud9.gg, which returns both RFC 8414 authorization-server metadata and RFC 9728
-  protected-resource metadata. The implementation is the WordPress MCP adapter (WordPress REST
-  namespace `mcp`, with the companion Abilities API at wp-abilities/v1), so what the server
-  fronts is the Cloud9 WordPress content estate — news, pages, media and the players, teams,
-  achievement and case-study custom post types — not a bespoke esports data API.
+description: Cloud9 publishes a remote Model Context Protocol server on its primary marketing host, cloud9.gg.
+  It is not listed in any MCP registry, is not mentioned anywhere on the Cloud9 site, and Cloud9 operates
+  no developer program — it was discovered by probing /.well-known/* on cloud9.gg, which returns both
+  RFC 8414 authorization-server metadata and RFC 9728 protected-resource metadata. The implementation
+  is the WordPress MCP adapter (WordPress REST namespace `mcp`, with the companion Abilities API at wp-abilities/v1),
+  so what the server fronts is the Cloud9 WordPress content estate — news, pages, media and the players,
+  teams, achievement and case-study custom post types — not a bespoke esports data API.
 server:
   name: cloud9
   transport: http
   url: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
   protocol: MCP over HTTP (JSON-RPC 2.0)
-  implementation: >-
-    WordPress MCP adapter on the cloud9.gg WordPress install (WP Cloud / Automattic Atomic
+  implementation: WordPress MCP adapter on the cloud9.gg WordPress install (WP Cloud / Automattic Atomic
     hosting). REST namespace `mcp` exposes three routes.
   routes:
   - path: /wp-json/mcp
-    methods: [GET]
+    methods:
+    - GET
     role: namespace index
   - path: /wp-json/mcp/mcp-oauth-server
-    methods: [POST, GET, DELETE]
+    methods:
+    - POST
+    - GET
+    - DELETE
     role: OAuth-protected MCP server (the advertised protected resource)
   - path: /wp-json/mcp/mcp-adapter-default-server
-    methods: [POST, GET, DELETE]
+    methods:
+    - POST
+    - GET
+    - DELETE
     role: default MCP server instance
   companion_namespace:
     name: wp-abilities/v1
     path: /wp-json/wp-abilities/v1
     routes: 6
-    note: >-
-      The WordPress Abilities API — the registry the MCP adapter turns into tools. Its
-      /abilities and /categories collections and the /abilities/{name}/run executor are all
-      present but return 401 rest_forbidden anonymously.
+    note: The WordPress Abilities API — the registry the MCP adapter turns into tools. Its /abilities
+      and /categories collections and the /abilities/{name}/run executor are all present but return 401
+      rest_forbidden anonymously.
 authorization:
   required: true
   model: OAuth 2.1 authorization code with PKCE
@@ -46,23 +49,27 @@ authorization:
   authorization_endpoint: https://cloud9.gg/oauth/authorize
   token_endpoint: https://cloud9.gg/oauth/token
   revocation_endpoint: https://cloud9.gg/oauth/revoke
-  grant_types_supported: [authorization_code, refresh_token]
-  response_types_supported: [code]
-  code_challenge_methods_supported: [S256]
-  token_endpoint_auth_methods_supported: [none]
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  response_types_supported:
+  - code
+  code_challenge_methods_supported:
+  - S256
+  token_endpoint_auth_methods_supported:
+  - none
   client_id_metadata_document_supported: true
-  bearer_methods_supported: [header]
-  scopes_supported: [mcp]
+  bearer_methods_supported:
+  - header
+  scopes_supported:
+  - mcp
   protected_resource: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
-  challenge: >-
-    WWW-Authenticate: Bearer realm="https://cloud9.gg",
-    resource_metadata="https://cloud9.gg/.well-known/oauth-protected-resource"
+  challenge: 'WWW-Authenticate: Bearer realm="https://cloud9.gg", resource_metadata="https://cloud9.gg/.well-known/oauth-protected-resource"'
   detail: scopes/cloud9-scopes.yml
 tools:
   discovered: false
-  discovery_method: >-
-    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} with
-    Accept: application/json, text/event-stream
+  discovery_method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} with Accept: application/json,
+    text/event-stream'
   http_status: 401
   responses:
   - endpoint: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
@@ -71,17 +78,13 @@ tools:
   - endpoint: https://cloud9.gg/wp-json/mcp/mcp-adapter-default-server
     status: 401
     body: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
-  note: >-
-    The live tool list and per-tool inputSchema are auth-gated. Cloud9 publishes no tool
-    inventory in documentation, in llms.txt (404) or anywhere else public, so NO tool list is
-    recorded here — deriving one would be fabrication. Authenticated introspection is required
-    to enumerate the surface.
+  note: The live tool list and per-tool inputSchema are auth-gated. Cloud9 publishes no tool inventory
+    in documentation, in llms.txt (404) or anywhere else public, so NO tool list is recorded here — deriving
+    one would be fabrication. Authenticated introspection is required to enumerate the surface.
 related_surfaces:
   rest: json-schema/cloud9-wp-rest-index.json
-  note: >-
-    The anonymous WordPress REST API on the same host is wide open for reads while the MCP
-    server on that same host is fully gated. See mcp/cloud9-tool-crosswalk.yml for the
-    divergence.
+  note: The anonymous WordPress REST API on the same host is wide open for reads while the MCP server
+    on that same host is fully gated. See mcp/cloud9-tool-crosswalk.yml for the divergence.
 x-evidence:
   fetched: '2026-08-09'
   probes:
@@ -101,3 +104,10 @@ x-evidence:
     status: 401
   - url: https://cloud9.gg/wp-json/wp-abilities/v1/abilities
     status: 401
+deployment:
+  mode: remote
+  endpoint: https://cloud9.gg/wp-json/mcp/mcp-oauth-server
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census
