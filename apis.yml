@@ -127,6 +127,11 @@ apis:
   baseURL: https://store.cloud9.gg
   tags:
   - Commerce
+  - Product
+  - JSON
+  - Shopify
+  tags_raw:
+  - Commerce
   - Products
   - JSON
   - Shopify
