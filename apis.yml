@@ -13,6 +13,17 @@ description: >-
   news posts, pages, media and the Cloud9-specific players, teams, achievement and case-study
   content types, alongside a remote Model Context Protocol server advertised through RFC 8414 and
   RFC 9728 discovery metadata.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cloud9.gg/wp-content/uploads/Team_C9_blu_80x80.svg
 url: https://raw.githubusercontent.com/api-evangelist/cloud9/refs/heads/main/apis.yml
 x-type: company
