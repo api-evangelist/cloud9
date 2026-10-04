@@ -57,56 +57,20 @@ tags:
 - Community
 - Merchandise
 apis:
-- aid: cloud9:wordpress-rest-api
-  name: Cloud9 WordPress REST API
-  description: >-
-    cloud9.gg runs on WordPress (WP Cloud / Automattic Atomic hosting) and serves the standard
-    WordPress REST API anonymously at https://cloud9.gg/wp-json/. The discovery index enumerates
-    277 routes across 14 namespaces; the wp/v2 namespace alone carries 118 routes. Read access
-    requires no credentials and no key. Alongside the core content types (89 posts, 17 pages,
-    1,175 media items, 19 categories, 3 users, a 769-item search index) the site registers four
-    Cloud9-specific custom post types that make the roster and record queryable: players (47),
-    teams (45), achievement (564) and case-study (7). Responses carry X-WP-Total and
-    X-WP-TotalPages pagination headers and RFC 8288 Link headers, and every collection publishes
-    a real JSON Schema over HTTP OPTIONS. Write operations are advertised on the same routes but
-    require WordPress authentication (application passwords), so the public surface is read-only.
-  humanURL: https://developer.wordpress.org/rest-api/
-  baseURL: https://cloud9.gg/wp-json/wp/v2
+- aid: cloud9:cloud9-gg-website-wordpress-rest
+  name: Cloud9 Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Cloud9 website at cloud9.gg: the route
+    index of the site''s content management system, catalogued as one site surface rather than as separate
+    APIs.'
+  baseURL: https://cloud9.gg/wp-json
   tags:
-  - Content
-  - REST
-  - JSON
   - WordPress
-  - Esports
+  x-surface: platform-generated
   properties:
-  - type: JSONSchema
-    url: json-schema/cloud9-wp-rest-schemas.json
-  - type: DataModel
-    url: data-model/cloud9-data-model.yml
-  - type: Conventions
-    url: conventions/cloud9-conventions.yml
-  - type: ErrorCatalog
-    url: errors/cloud9-problem-types.yml
-  - type: Authentication
-    url: authentication/cloud9-authentication.yml
-  - type: AgentSkill
-    url: skills/cloud9-read-roster-and-news.md
-  x-evidence:
-    discovery_url: https://cloud9.gg/wp-json/
-    http_status: 200
-    fetched: '2026-08-09'
-    routes: 277
-    namespaces: 14
-    anonymous_read: true
-    platform_docs: https://developer.wordpress.org/rest-api/
-    note: >-
-      This is the WordPress platform REST API as deployed on the Cloud9 site, not a bespoke
-      Cloud9 developer API. Cloud9 publishes no OpenAPI and no developer documentation for it;
-      the contract recorded here was read from the live discovery index and from HTTP OPTIONS
-      schema responses on each collection. No Documentation or APIReference pointer is emitted
-      for this API: the only reference that describes it is WordPress's own upstream
-      documentation, which Cloud9 neither authored nor links to, and crediting Cloud9 with it
-      would overstate what this company publishes.
+  - type: Documentation
+    url: https://cloud9.gg/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: cloud9:mcp-server
   name: Cloud9 MCP Server
   description: >-
@@ -139,6 +103,9 @@ apis:
     http_status: 200
     tools_list_status: 401
     fetched: '2026-08-09'
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: mcp-plugin
 - aid: cloud9:store-json
   name: Cloud9 Store JSON Endpoints
   description: >-
@@ -168,6 +135,9 @@ apis:
     collections_status: 200
     platform: Shopify (powered-by header)
     fetched: '2026-08-09'
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: storefront-json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -228,6 +198,8 @@ common:
   url: skills/_index.yml
 - type: SecondaryMarket
   url: https://forgeglobal.com/cloud9_stock/
+- type: AgentSkill
+  url: skills/cloud9-read-roster-and-news.md
 x-enrichment:
   date: '2026-08-09'
   status: enriched
