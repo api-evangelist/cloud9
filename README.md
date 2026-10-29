@@ -64,26 +64,113 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cloud9 Esports, Inc. is a North American professional esports organization founded in 2013 by Jack
-and Paullie Etienne and headquartered in Santa Monica, California, fielding rosters across League of
-Legends, VALORANT, VALORANT Game Changers, Call of Duty and Rainbow Six.
+Cloud9 Esports, Inc. is a North American professional esports organization founded in 2013 by Jack and Paullie Etienne and headquartered in Santa Monica, California. It fields competitive rosters across League of Legends, VALORANT, VALORANT Game Changers, Call of Duty and Rainbow Six, and its trophy case includes the inaugural Overwatch World Championship, the 2018 Rocket League World Championship, multiple LCS titles and a Counter-Strike Major. Beyond competition it runs Club9 (a membership and fan community at club9.cloud9.gg), an official Shopify merchandise store at store.cloud9.gg, and a content and creator division. Cloud9 publishes no developer program and no OpenAPI, but its public web estate is machine-readable: cloud9.gg runs on WordPress and serves an anonymous, unauthenticated WordPress REST API at /wp-json/ covering news posts, pages, media and the Cloud9-specific players, teams, achievement and case-study content types, alongside a remote Model Context Protocol server advertised through RFC 8414 and RFC 9728 discovery metadata.
 
-Cloud9 runs no developer program and publishes no OpenAPI. Its public web estate is nonetheless
-machine-readable, and that is what this profile captures:
+**Areas:** Company · Esports · Gaming · Entertainment · Media · Sports · Content · WordPress · Community · Merchandise
 
-- **[cloud9.gg/wp-json/](https://cloud9.gg/wp-json/)** — an anonymous, unauthenticated WordPress
-  REST API. 277 routes across 14 namespaces, including four Cloud9-specific content types that make
-  the organization queryable as data: `players` (47), `teams` (45), `achievement` (564) and
-  `case-study` (7). Each collection's JSON Schema was harvested verbatim over HTTP `OPTIONS`.
-- **[cloud9.gg/wp-json/mcp/mcp-oauth-server](https://cloud9.gg/wp-json/mcp/mcp-oauth-server)** — an
-  undocumented remote Model Context Protocol server, discovered by probing `/.well-known/*`. It
-  advertises RFC 8414 authorization-server metadata and RFC 9728 protected-resource metadata, and
-  is gated behind OAuth 2.1 with PKCE and a single `mcp` scope. Anonymous `tools/list` returns 401,
-  so no tool inventory is recorded.
-- **[store.cloud9.gg](https://store.cloud9.gg/)** — a Shopify storefront serving the platform's
-  default anonymous `/products.json` and `/collections.json`.
+## Cloud9 on APIs.io
 
-The inversion is the interesting part: the agent-native surface is locked while the same content is
-served to anyone over REST with no credential at all.
+Everything profiled for Cloud9 is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/cloud9/](https://apis.io/providers/cloud9/)** — or go straight to one of the APIs or properties below.
 
-Harvest source: https://forgeglobal.com/cloud9_stock/
+### APIs (3)
+
+- [Cloud9 Website (WordPress REST)](https://apis.io/apis/cloud9/cloud9-gg-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Cloud9 website at cloud9.gg: the route index of the site's content management system, catalogued as one site…
+- [Cloud9 MCP Server](https://apis.io/apis/cloud9/mcp-server/) — A remote Model Context Protocol server published on cloud9.gg and advertised through RFC 8414 OAuth authorization-server metadata and RFC 9728…
+- [Cloud9 Store JSON Endpoints](https://apis.io/apis/cloud9/store-json/) — The official Cloud9 merchandise store at store.cloud9.gg is a Shopify storefront, and Shopify serves its standard anonymous product and collection JSON…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [cloud9](https://apis.io/servers/cloud9/cloud9/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [Cloud9 Wp Rest Index](https://apis.io/schemas/cloud9/cloud9-wp-rest-index/)
+- [Cloud9 Wp Rest Schemas](https://apis.io/schemas/cloud9/cloud9-wp-rest-schemas/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Cloud9 Authentication](https://apis.io/security/cloud9/cloud9-authentication/)
+- [Cloud9 Domain Security](https://apis.io/security/cloud9/cloud9-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Cloud9 Scopes](https://apis.io/scopes/cloud9/cloud9-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://cloud9.gg/)
+- [Sign up](https://club9.cloud9.gg/explore?callbackUrl=/explore&login=open)
+- [Support](https://cloud9.gg/contact/)
+- [Blog](https://cloud9.gg/news/)
+- [Terms of service](https://cloud9.gg/terms-of-service/)
+- [Privacy policy](https://cloud9.gg/privacy-policy/)
+- [GitHub](https://github.com/cloud9esports)
+
+## API Evangelist rating
+
+**Kin Score 24.8** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 65.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 34.2 |
+
+**Agent readiness 20.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/cloud9/](https://apis.io/providers/cloud9/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Cloud9: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/cloud9/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
